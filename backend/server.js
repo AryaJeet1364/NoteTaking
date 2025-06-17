@@ -2,20 +2,23 @@ import express from "express";
 import notesRoutes from "./src/routes/notesRoutes.js";
 import {connectDB} from "./src/config/db.js"
 import dotenv from "dotenv";
+import rateLimiter from "./src/middlewares/rateLimiter.js";
+
+ 
 dotenv.config();
 
 
 const app = express();
 
-connectDB();
 
 app.use(express.json())
+app.use(rateLimiter)
 
 app.use("/api/notes", notesRoutes);
 
-app.listen(5001, () => {
-  console.log("Server started on port: 5001");
+connectDB().then(()=>{
+  app.listen(5001, () => {
+    console.log("Server started on port: 5001");
+  });
 });
 
-
-// 1:20:46
