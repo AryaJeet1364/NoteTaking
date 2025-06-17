@@ -9,8 +9,13 @@ const app = express();
 
 connectDB();
 
+app.use(express.json())
+
 app.use("/api/notes", notesRoutes);
 
 app.listen(5001, () => {
   console.log("Server started on port: 5001");
 });
+
+
+// 1:20:46
